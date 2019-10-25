@@ -1,5 +1,5 @@
 import { ArticleData, ArticleComment } from '@angular-ngrx-nx-realworld-example-app/api/src/lib/types';
-import { LoadArticle, LoadComments } from './article.actions';
+import { LoadArticle, LoadComments, DeleteArticleComment } from './article.actions';
 import { Article } from '../+state/article.reducer';
 import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { ArticleService } from '../article.service';
@@ -62,6 +62,16 @@ export class ArticleState {
   loadComments({ patchState }: StateContext<Article>, { slug }: LoadArticle) {
     return this.articleService.getComments(slug).pipe(
       tap((comments: ArticleComment[]) => {
+        patchState({ comments });
+      })
+    );
+  }
+
+  @Action(DeleteArticleComment)
+  deleteArticleComment({ patchState, getState }: StateContext<Article>, { commentId, slug }: DeleteArticleComment) {
+    return this.articleService.deleteComment(commentId, slug).pipe(
+      tap(() => {
+        const comments = getState().comments.filter((comment) => comment.id !== commentId);
         patchState({ comments });
       })
     );

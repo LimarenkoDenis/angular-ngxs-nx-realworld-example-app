@@ -78,7 +78,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
     this.facade.delete(slug);
   }
   deleteComment(data: { commentId: number; slug: string }) {
-    this.facade.deleteComment(data);
+    this.articleFacadeV2.deleteComment(data);
   }
   submit(slug: string) {
     this.facade.submit(slug);

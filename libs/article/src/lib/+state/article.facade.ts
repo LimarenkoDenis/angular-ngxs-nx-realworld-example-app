@@ -39,6 +39,7 @@ export class ArticleFacade {
   delete(slug: string) {
     this.store.dispatch(ArticleActions.deleteArticle({slug}));
   }
+  // implememnted for V2, deprecated
   deleteComment(data: { commentId: number; slug: string }) {
     this.store.dispatch(ArticleActions.deleteComment(data));
   }

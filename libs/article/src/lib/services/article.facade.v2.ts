@@ -1,4 +1,4 @@
-import { LoadComments } from './../state/article.actions';
+import { LoadComments, DeleteArticleComment } from './../state/article.actions';
 import { ArticleData, ArticleComment } from '@angular-ngrx-nx-realworld-example-app/api';
 import { LoadArticle } from '../state/article.actions';
 import { Injectable } from '@angular/core';
@@ -29,6 +29,10 @@ export class ArticleFacadeV2 {
 
   loadComments(slug: string): any {
     this.store.dispatch(new LoadComments(slug))
+  }
+
+  deleteComment(data: { commentId: number; slug: string }) {
+    this.store.dispatch(new DeleteArticleComment(data.commentId, data.slug));
   }
 
 }
