@@ -1,8 +1,10 @@
+import { ArticleFacadeV2 } from './../services/article.facade.v2';
 import { ArticleService } from '../article.service';
 import { ActionsService } from '@angular-ngrx-nx-realworld-example-app/shared';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
+import { tap } from 'rxjs/operators'
 import {
   catchError,
   concatMap,
@@ -73,6 +75,7 @@ export class ArticleEffects {
             ArticleActions.addCommentSuccess({ comment }),
             new ResetForm()
           ]),
+          tap(() => this.articleFacadeV2.loadComments(slug)),
           catchError(result => of(new SetErrors(result.error.errors)))
         )
       )
@@ -149,6 +152,7 @@ export class ArticleEffects {
     private actions$: Actions,
     private articleService: ArticleService,
     private actionsService: ActionsService,
-    private ngrxFormsFacade: NgrxFormsFacade
+    private ngrxFormsFacade: NgrxFormsFacade,
+    private articleFacadeV2: ArticleFacadeV2
   ) {}
 }

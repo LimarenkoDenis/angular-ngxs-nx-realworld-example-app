@@ -1,4 +1,5 @@
-import { ArticleData } from '@angular-ngrx-nx-realworld-example-app/api';
+import { LoadComments } from './../state/article.actions';
+import { ArticleData, ArticleComment } from '@angular-ngrx-nx-realworld-example-app/api';
 import { LoadArticle } from '../state/article.actions';
 import { Injectable } from '@angular/core';
 
@@ -16,10 +17,18 @@ export class ArticleFacadeV2 {
   @Select(ArticleState.article)
   public article$: Observable<ArticleData>;
 
+  @Select(ArticleState.comments)
+  public comments$: Observable<ArticleComment[]>;
+
   @Select(ArticleState.loaded)
   public loaded$: Observable<boolean>;
 
   loadArticle(slug: string): any {
     this.store.dispatch(new LoadArticle(slug))
   }
+
+  loadComments(slug: string): any {
+    this.store.dispatch(new LoadComments(slug))
+  }
+
 }

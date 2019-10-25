@@ -45,7 +45,8 @@ export class ArticleComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.article$ = this.articleFacadeV2.article$;
-    this.comments$ = this.facade.comments$;
+    this.comments$ = this.articleFacadeV2.comments$;
+
     this.isAuthenticated$ = this.auhtFacade.isLoggedIn$;
     this.currentUser$ = this.auhtFacade.user$;
     this.data$ = this.ngrxFormsFacade.data$;

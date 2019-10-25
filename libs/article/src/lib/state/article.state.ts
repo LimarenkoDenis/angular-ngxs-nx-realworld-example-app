@@ -1,9 +1,10 @@
-import { ArticleData } from '@angular-ngrx-nx-realworld-example-app/api/src/lib/types';
-import { LoadArticle } from './article.actions';
+import { ArticleData, ArticleComment } from '@angular-ngrx-nx-realworld-example-app/api/src/lib/types';
+import { LoadArticle, LoadComments } from './article.actions';
 import { Article } from '../+state/article.reducer';
 import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { ArticleService } from '../article.service';
 import { tap } from 'rxjs/operators';
+import { addCommentSuccess } from '../+state/article.actions';
 
 @State<Article>({
   name: 'article',
@@ -39,6 +40,11 @@ export class ArticleState {
   }
 
   @Selector()
+  static comments(state: Article): ArticleComment[] {
+    return state.comments;
+  }
+
+  @Selector()
   static loaded(state: Article): boolean {
     return state.loaded;
   }
@@ -48,6 +54,15 @@ export class ArticleState {
     return this.articleService.get(slug).pipe(
       tap((data: ArticleData) => {
         patchState({ data, loaded: true, loading: false });
+      })
+    );
+  }
+
+  @Action(LoadComments)
+  loadComments({ patchState }: StateContext<Article>, { slug }: LoadArticle) {
+    return this.articleService.getComments(slug).pipe(
+      tap((comments: ArticleComment[]) => {
+        patchState({ comments });
       })
     );
   }

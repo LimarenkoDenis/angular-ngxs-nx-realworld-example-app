@@ -1,3 +1,4 @@
+// import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ApiModule } from '@angular-ngrx-nx-realworld-example-app/api';
 import { AuthModule } from '@angular-ngrx-nx-realworld-example-app/auth';
 import { NgrxErrorModule } from '@angular-ngrx-nx-realworld-example-app/ngrx-error';
@@ -43,6 +44,7 @@ import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
     NgxsModule.forRoot([]),
     NgxsLoggerPluginModule.forRoot(),
     !environment.production ? NgxsReduxDevtoolsPluginModule.forRoot() : [],
+    // !environment.production ? StoreDevtoolsModule.instrument() : [],
     NgrxRouterModule,
     NgrxErrorModule
   ],

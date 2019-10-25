@@ -1,6 +1,6 @@
 import { ArticleFacadeV2 } from './services/article.facade.v2';
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot, CanActivate } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { filter, take, switchMap, tap } from 'rxjs/operators';
 import { ArticleFacade } from './+state/article.facade';
@@ -17,6 +17,6 @@ export class ArticleGuardService implements CanActivate {
     const slug = route.params['slug'];
     this.articleFacadeV2.loadArticle(slug)
 
-    return this.waitForArticleToLoad().pipe(tap(() => this.facade.loadComments(slug)));
+    return this.waitForArticleToLoad().pipe(tap(() => this.articleFacadeV2.loadComments(slug)));
   }
 }

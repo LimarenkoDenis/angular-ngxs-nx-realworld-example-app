@@ -14,12 +14,16 @@ export class ArticleFacade {
 
   constructor(private store: Store<ArticleState>) {}
 
+  // implemented for V2, deprecated
   loadArticle(slug: string) {
     this.store.dispatch(ArticleActions.loadArticle({slug}));
   }
+
+  // implemented for V2, deprecated
   loadComments(slug: string) {
     this.store.dispatch(ArticleActions.loadComments({slug}));
   }
+
   follow(username: string) {
     this.store.dispatch(ArticleActions.follow({username}));
   }
