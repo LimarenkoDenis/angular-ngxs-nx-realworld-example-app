@@ -1,3 +1,4 @@
+import { ArticleFacadeV2 } from './services/article.facade.v2';
 import { ArticleComment, ArticleData, User } from '@angular-ngrx-nx-realworld-example-app/api';
 import { AuthFacade } from '@angular-ngrx-nx-realworld-example-app/auth';
 import { Field, NgrxFormsFacade } from '@angular-ngrx-nx-realworld-example-app/ngrx-forms';
@@ -38,11 +39,12 @@ export class ArticleComponent implements OnInit, OnDestroy {
   constructor(
     private ngrxFormsFacade: NgrxFormsFacade,
     private facade: ArticleFacade,
-    private auhtFacade: AuthFacade
+    private auhtFacade: AuthFacade,
+    private articleFacadeV2: ArticleFacadeV2
   ) {}
 
   ngOnInit() {
-    this.article$ = this.facade.article$;
+    this.article$ = this.articleFacadeV2.article$;
     this.comments$ = this.facade.comments$;
     this.isAuthenticated$ = this.auhtFacade.isLoggedIn$;
     this.currentUser$ = this.auhtFacade.user$;

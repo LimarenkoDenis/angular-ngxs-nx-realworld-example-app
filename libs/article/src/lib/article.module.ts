@@ -1,3 +1,4 @@
+import { ArticleFacadeV2 } from './services/article.facade.v2';
 import { NgrxFormsModule } from '@angular-ngrx-nx-realworld-example-app/ngrx-forms';
 import { SharedModule } from '@angular-ngrx-nx-realworld-example-app/shared';
 import { CommonModule } from '@angular/common';
@@ -16,17 +17,20 @@ import { ArticleMetaComponent } from './article-meta/article-meta.component';
 import { ArticleComponent } from './article.component';
 import { ArticleService } from './article.service';
 import { MarkdownPipe } from './markdown.pipe';
-
+import { NgxsModule } from '@ngxs/store';
+import {ArticleState} from './state/article.state'
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild([{ path: '', component: ArticleComponent, canActivate: [ArticleGuardService] }]),
+
+    NgxsModule.forFeature([ArticleState]),
     StoreModule.forFeature('article', articleReducer, { initialState: articleInitialState }),
     EffectsModule.forFeature([ArticleEffects]),
     NgrxFormsModule,
     SharedModule
   ],
-  providers: [ArticleEffects, ArticleService, ArticleGuardService, ArticleFacade],
+  providers: [ArticleEffects, ArticleService, ArticleGuardService, ArticleFacade, ArticleFacadeV2],
   declarations: [ArticleComponent, ArticleMetaComponent, ArticleCommentComponent, MarkdownPipe, AddCommentComponent]
 })
 export class ArticleModule {}

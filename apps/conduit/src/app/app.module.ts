@@ -7,7 +7,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { NxModule } from '@nrwl/angular';
 import { storeFreeze } from 'ngrx-store-freeze';
 
@@ -15,6 +14,10 @@ import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { NavbarComponent } from './layout/navbar/navbar.component';
+
+import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
+import { NgxsModule } from '@ngxs/store';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 
 @NgModule({
   imports: [
@@ -37,7 +40,9 @@ import { NavbarComponent } from './layout/navbar/navbar.component';
     ),
     StoreModule.forRoot({}, { metaReducers: !environment.production ? [storeFreeze] : [] }),
     EffectsModule.forRoot([]),
-    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    NgxsModule.forRoot([]),
+    NgxsLoggerPluginModule.forRoot(),
+    !environment.production ? NgxsReduxDevtoolsPluginModule.forRoot() : [],
     NgrxRouterModule,
     NgrxErrorModule
   ],
