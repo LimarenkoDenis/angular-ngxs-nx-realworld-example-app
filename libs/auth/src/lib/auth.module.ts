@@ -1,3 +1,5 @@
+import { AuthState } from './state/auth.state';
+import { NgxsModule } from '@ngxs/store';
 import { NgrxFormsModule } from '@angular-ngrx-nx-realworld-example-app/ngrx-forms';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -30,6 +32,7 @@ const authRouting: ModuleWithProviders = RouterModule.forChild([
 @NgModule({
   imports: [
     CommonModule,
+    NgxsModule.forFeature([AuthState]),
     NgrxFormsModule,
     authRouting,
     StoreModule.forFeature('auth', authReducer, { initialState: authInitialState }),

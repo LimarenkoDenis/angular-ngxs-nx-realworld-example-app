@@ -1,17 +1,17 @@
 import { ValidatorFn } from '@angular/forms';
 
-export interface NgrxForms {
+export interface SimpleForm {
     data: any;
     structure: Field[];
     valid: boolean;
     errors: Errors;
     touched: boolean;
   }
-  
-  export interface NgrxFormsState {
-    readonly ngrxForms: NgrxForms;
+
+  export interface SimpleFormState {
+    readonly SimpleForm: SimpleForm;
   }
-  
+
   export interface Field {
     type: FieldType;
     name: string;
@@ -20,9 +20,9 @@ export interface NgrxForms {
     validator?: ValidatorFn[];
     attrs?: any;
   }
-  
+
   export type FieldType = 'INPUT' | 'TEXTAREA';
-  
+
   export interface Errors {
     [key: string]: string;
   }

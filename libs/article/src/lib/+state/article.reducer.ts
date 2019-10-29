@@ -54,10 +54,10 @@ const reducer = createReducer(
     loaded: false,
     loading: false
   })),
-  on(ArticleActions.addCommentSuccess, (state, action) => {
-    const comments: ArticleComment[] = [action.comment, ...state.comments];
-    return { ...state, comments };
-  }),
+  // on(ArticleActions.addCommentSuccess, (state, action) => {
+  //   const comments: ArticleComment[] = [action.comment, ...state.comments];
+  //   return { ...state, comments };
+  // }),
   on(ArticleActions.deleteCommentSuccess, (state, action) => {
     const comments: ArticleComment[] = state.comments.filter(
       item => item.id !== action.commentId

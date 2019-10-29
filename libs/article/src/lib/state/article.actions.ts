@@ -12,3 +12,8 @@ export class DeleteArticleComment {
   static type = '[article] DELETE ARTICLE COMMENT';
   constructor(public commentId: number, public slug: string) {}
 }
+
+export class AddComment {
+  static type = '[article] ADD COMMENT TO ARTICLE';
+  constructor(public slug: string) {}
+}

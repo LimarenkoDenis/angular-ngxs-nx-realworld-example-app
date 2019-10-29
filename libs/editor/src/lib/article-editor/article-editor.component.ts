@@ -1,4 +1,4 @@
-import { Field, NgrxFormsFacade } from '@angular-ngrx-nx-realworld-example-app/ngrx-forms';
+import { Field, SimpleFormFacade } from '@angular-ngrx-nx-realworld-example-app/ngrx-forms';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { Validators } from '@angular/forms';
@@ -44,17 +44,17 @@ export class ArticleEditorComponent implements OnInit, OnDestroy {
   structure$: Observable<Field[]>;
   data$: Observable<any>;
 
-  constructor(private ngrxFormsFacade: NgrxFormsFacade, private router: Router, private facade: EditorFacade) {}
+  constructor(private simpleFormFacade: SimpleFormFacade, private router: Router, private facade: EditorFacade) {}
 
   ngOnInit() {
-    this.ngrxFormsFacade.setStructure(structure);
-    this.data$ = this.ngrxFormsFacade.data$;
-    this.structure$ = this.ngrxFormsFacade.structure$;
-    this.facade.article$.subscribe(article => this.ngrxFormsFacade.setData(article));
+    this.simpleFormFacade.setStructure(structure);
+    this.data$ = this.simpleFormFacade.data$;
+    this.structure$ = this.simpleFormFacade.structure$;
+    this.facade.article$.subscribe(article => this.simpleFormFacade.setData(article));
   }
 
   updateForm(changes: any) {
-    this.ngrxFormsFacade.updateData(changes);
+    this.simpleFormFacade.updateData(changes);
   }
 
   submit() {
@@ -62,7 +62,7 @@ export class ArticleEditorComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.ngrxFormsFacade.initializeForm();
+    this.simpleFormFacade.initializeForm();
     this.facade.initializeArticle();
   }
 }

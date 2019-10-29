@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { Field } from '../+state/ngrx-forms.interfaces';
+import { Field } from '../interfaces/simple-form.interfaces';
 import { InputComponent } from '../fields/input/input.component';
 import { TextareaComponent } from '../fields/textarea/textarea.component';
 

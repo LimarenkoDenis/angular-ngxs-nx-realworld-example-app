@@ -16,9 +16,9 @@ import {
 import * as ArticleActions from './article.actions';
 
 import {
-  NgrxFormsFacade,
   ResetForm,
-  SetErrors
+  SetErrors,
+  SimpleFormFacade
 } from '@angular-ngrx-nx-realworld-example-app/ngrx-forms';
 
 @Injectable()
@@ -61,26 +61,28 @@ export class ArticleEffects {
     )
   );
 
-  addComment = createEffect(() =>
-    this.actions$.pipe(
-      ofType(ArticleActions.addComment),
-      map(action => action.slug),
-      withLatestFrom(
-        this.ngrxFormsFacade.data$,
-        this.ngrxFormsFacade.structure$
-      ),
-      exhaustMap(([slug, data, structure]) =>
-        this.articleService.addComment(slug, data.comment).pipe(
-          mergeMap(comment => [
-            ArticleActions.addCommentSuccess({ comment }),
-            new ResetForm()
-          ]),
-          tap(() => this.articleFacadeV2.loadComments(slug)),
-          catchError(result => of(new SetErrors(result.error.errors)))
-        )
-      )
-    )
-  );
+
+  // deprecated
+  // addComment = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(ArticleActions.addComment),
+  //     map(action => action.slug),
+  //     withLatestFrom(
+  //       this.simpleFormFacade.data$,
+  //       this.simpleFormFacade.structure$
+  //     ),
+  //     exhaustMap(([slug, data, structure]) =>
+  //       this.articleService.addComment(slug, data.comment).pipe(
+  //         mergeMap(comment => [
+  //           ArticleActions.addCommentSuccess({ comment }),
+  //           new ResetForm()
+  //         ]),
+  //         tap(() => this.articleFacadeV2.loadComments(slug)),
+  //         catchError(result => of(new SetErrors(result.error.errors)))
+  //       )
+  //     )
+  //   )
+  // );
 
   deleteComment = createEffect(() =>
     this.actions$.pipe(
@@ -152,7 +154,7 @@ export class ArticleEffects {
     private actions$: Actions,
     private articleService: ArticleService,
     private actionsService: ActionsService,
-    private ngrxFormsFacade: NgrxFormsFacade,
-    private articleFacadeV2: ArticleFacadeV2
+    private articleFacadeV2: ArticleFacadeV2,
+    private simpleFormFacade: SimpleFormFacade,
   ) {}
 }

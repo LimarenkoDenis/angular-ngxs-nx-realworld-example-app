@@ -1,4 +1,4 @@
-import { Field, NgrxFormsFacade } from '@angular-ngrx-nx-realworld-example-app/ngrx-forms';
+import { Field, SimpleFormFacade } from '@angular-ngrx-nx-realworld-example-app/ngrx-forms';
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -39,16 +39,16 @@ export class RegisterComponent implements OnInit, OnDestroy {
   structure$: Observable<Field[]>;
   data$: Observable<any>;
 
-  constructor(private ngrxFormsFacade: NgrxFormsFacade, private facade: AuthFacade) {}
+  constructor(private simpleFormFacade: SimpleFormFacade, private facade: AuthFacade) {}
 
   ngOnInit() {
-    this.ngrxFormsFacade.setStructure(structure);
-    this.data$ = this.ngrxFormsFacade.data$;
-    this.structure$ = this.ngrxFormsFacade.structure$;
+    this.simpleFormFacade.setStructure(structure);
+    this.data$ = this.simpleFormFacade.data$;
+    this.structure$ = this.simpleFormFacade.structure$;
   }
 
   updateForm(changes: any) {
-    this.ngrxFormsFacade.updateData(changes);
+    this.simpleFormFacade.updateData(changes);
   }
 
   submit() {
@@ -56,6 +56,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.ngrxFormsFacade.initializeForm();
+    this.simpleFormFacade.initializeForm();
   }
 }

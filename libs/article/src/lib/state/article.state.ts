@@ -1,10 +1,11 @@
-import { ArticleData, ArticleComment } from '@angular-ngrx-nx-realworld-example-app/api/src/lib/types';
-import { LoadArticle, LoadComments, DeleteArticleComment } from './article.actions';
+import { ArticleData, ArticleComment } from '@angular-ngrx-nx-realworld-example-app/api';
+import { LoadArticle, LoadComments, DeleteArticleComment, AddComment } from './article.actions';
 import { Article } from '../+state/article.reducer';
 import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { ArticleService } from '../article.service';
-import { tap } from 'rxjs/operators';
-import { addCommentSuccess } from '../+state/article.actions';
+import { tap, switchMap, catchError } from 'rxjs/operators';
+import { SimpleFormFacade, SetErrors } from '@angular-ngrx-nx-realworld-example-app/ngrx-forms';
+import { of } from 'rxjs';
 
 @State<Article>({
   name: 'article',
@@ -67,6 +68,22 @@ export class ArticleState {
     );
   }
 
+  @Action(AddComment)
+  addCommentToArticle({ patchState, getState }: StateContext<Article>, { slug }: AddComment) {
+    // TODO: research https://www.ngxs.io/concepts/select#meta-selectors
+
+    return this.simpleFormFacade.data$.pipe(
+      switchMap((data: any) => this.articleService.addComment(slug, data.comment).pipe(
+        tap((comment: ArticleComment) => {
+          const comments: ArticleComment[] = getState().comments
+          patchState({ comments: [...comments, comment] });
+        }),
+        tap(() => this.simpleFormFacade.resetForm()),
+        catchError(result => of(new SetErrors(result.error.errors)))
+      ))
+    )
+  }
+
   @Action(DeleteArticleComment)
   deleteArticleComment({ patchState, getState }: StateContext<Article>, { commentId, slug }: DeleteArticleComment) {
     return this.articleService.deleteComment(commentId, slug).pipe(
@@ -79,6 +96,6 @@ export class ArticleState {
 
   constructor(
     private articleService: ArticleService,
-
+    private simpleFormFacade: SimpleFormFacade
   ){}
 }

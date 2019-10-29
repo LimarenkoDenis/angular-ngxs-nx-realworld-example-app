@@ -43,9 +43,11 @@ export class ArticleFacade {
   deleteComment(data: { commentId: number; slug: string }) {
     this.store.dispatch(ArticleActions.deleteComment(data));
   }
-  submit(slug: string) {
-    this.store.dispatch(ArticleActions.addComment({slug}));
-  }
+
+  // deprecated
+  // submit(slug: string) {
+  //   this.store.dispatch(ArticleActions.addComment({slug}));
+  // }
   initializeArticle() {
     this.store.dispatch(ArticleActions.initializeArticle());
   }

@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { Field } from '../../+state/ngrx-forms.interfaces';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Field } from '../../interfaces/simple-form.interfaces';
 
 @Component({
   selector: 'app-input',

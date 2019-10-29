@@ -107,20 +107,21 @@ export const unFollowFail = createAction(
   props<{ error: Error }>()
 );
 
-export const addComment = createAction(
-  '[article] ADD_COMMENT',
-  props<{ slug: string }>()
-);
+// deprecated
+// export const addComment = createAction(
+//   '[article] ADD_COMMENT',
+//   props<{ slug: string }>()
+// );
 
-export const addCommentFail = createAction(
-  '[article] ADD_COMMENT_FAIL',
-  props<{ error: Error }>()
-);
+// export const addCommentFail = createAction(
+//   '[article] ADD_COMMENT_FAIL',
+//   props<{ error: Error }>()
+// );
 
-export const addCommentSuccess = createAction(
-  '[article] ADD_COMMENT_SUCCESS',
-  props<{ comment: ArticleComment }>()
-);
+// export const addCommentSuccess = createAction(
+//   '[article] ADD_COMMENT_SUCCESS',
+//   props<{ comment: ArticleComment }>()
+// );
 
 export const deleteComment = createAction(
   '[article] DELETE_COMMENT',

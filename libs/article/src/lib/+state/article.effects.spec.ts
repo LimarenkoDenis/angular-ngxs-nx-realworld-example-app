@@ -8,7 +8,6 @@ import { hot } from '@nrwl/angular/testing';
 import { ArticleService } from '../article.service';
 import { ArticleEffects } from './article.effects';
 import { ActionsService } from '@angular-ngrx-nx-realworld-example-app/shared';
-import { NgrxFormsFacade } from '@angular-ngrx-nx-realworld-example-app/ngrx-forms';
 
 describe('ArticleEffects', () => {
 	let actions;
@@ -17,7 +16,7 @@ describe('ArticleEffects', () => {
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			imports: [StoreModule.forRoot({}), HttpClientTestingModule],
-			providers: [ArticleEffects, provideMockActions(() => actions), ArticleService, ApiService, ActionsService, NgrxFormsFacade]
+			providers: [ArticleEffects, provideMockActions(() => actions), ArticleService, ApiService, ActionsService]
 		});
 
 		effects = TestBed.get(ArticleEffects);

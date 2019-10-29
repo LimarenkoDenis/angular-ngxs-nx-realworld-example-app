@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-
-import { NgrxFormsFacade } from '../+state/ngrx-forms.facade';
+import { SimpleFormFacade } from '../state/simple-form.facade';
 
 @Component({
   selector: 'app-list-errors',
@@ -13,10 +12,10 @@ export class ListErrorsComponent implements OnInit, OnDestroy {
   errors: string[];
   unsubscribe$: Subject<void> = new Subject();
 
-  constructor(private ngrxFormsFacade: NgrxFormsFacade, private changeDetectorRef: ChangeDetectorRef) {}
+  constructor(private simpleFormFacade: SimpleFormFacade, private changeDetectorRef: ChangeDetectorRef) {}
 
   ngOnInit() {
-    this.ngrxFormsFacade.errors$.subscribe(e => {
+    this.simpleFormFacade.errors$.subscribe(e => {
       this.errors = Object.keys(e || {}).map(key => `${key} ${e[key]}`);
       this.changeDetectorRef.markForCheck();
     });
@@ -25,6 +24,6 @@ export class ListErrorsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
-    this.ngrxFormsFacade.initializeErrors();
+    this.simpleFormFacade.initializeErrors();
   }
 }

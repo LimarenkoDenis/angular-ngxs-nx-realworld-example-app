@@ -1,5 +1,5 @@
 import { AuthService } from '../auth.service';
-import { NgrxFormsFacade } from '@angular-ngrx-nx-realworld-example-app/ngrx-forms';
+import { SimpleFormFacade } from '@angular-ngrx-nx-realworld-example-app/ngrx-forms';
 import * as fromNgrxForms from '@angular-ngrx-nx-realworld-example-app/ngrx-forms';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -31,20 +31,21 @@ export class AuthEffects {
     )
   );
 
-  login$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(AuthActions.login),
-      withLatestFrom(this.ngrxFormsFacade.data$),
-      exhaustMap(([action, data]) =>
-        this.authService.login(data).pipe(
-          map(user => AuthActions.loginSuccess({ user })),
-          catchError(result =>
-            of(new fromNgrxForms.SetErrors(result.error.errors))
-          )
-        )
-      )
-    )
-  );
+  // login$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(AuthActions.login),
+  //     withLatestFrom(this.simpleFormFacade.data$),
+  //     exhaustMap(([action, data]) =>
+  //       this.authService.login(data).pipe(
+  //         map(user => AuthActions.loginSuccess({ user })),
+  //         catchError(result =>
+  //           // TODO: fix type
+  //           of(new fromNgrxForms.SetErrors(result.error.errors) as any)
+  //         )
+  //       )
+  //     )
+  //   )
+  // );
 
   loginOrRegisterSuccess$ = createEffect(
     () =>
@@ -58,20 +59,22 @@ export class AuthEffects {
     { dispatch: false }
   );
 
-  register$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(AuthActions.register),
-      withLatestFrom(this.ngrxFormsFacade.data$),
-      exhaustMap(([action, data]) =>
-        this.authService.register(data).pipe(
-          map(user => AuthActions.registerSuccess({ user })),
-          catchError(result =>
-            of(new fromNgrxForms.SetErrors(result.error.errors))
-          )
-        )
-      )
-    )
-  );
+
+  // register$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(AuthActions.register),
+  //     withLatestFrom(this.simpleFormFacade.data$),
+  //     exhaustMap(([action, data]) =>
+  //       this.authService.register(data).pipe(
+  //         map(user => AuthActions.registerSuccess({ user })),
+  //         catchError(result =>
+  //           // TODO: fix type
+  //           of(new fromNgrxForms.SetErrors(result.error.errors) as any)
+  //         )
+  //       )
+  //     )
+  //   )
+  // );
 
   logout$ = createEffect(
     () =>
@@ -88,7 +91,7 @@ export class AuthEffects {
   constructor(
     private actions$: Actions,
     private localStorageJwtService: LocalStorageJwtService,
-    private ngrxFormsFacade: NgrxFormsFacade,
+    private simpleFormFacade: SimpleFormFacade,
     private authService: AuthService,
     private router: Router
   ) {}

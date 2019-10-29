@@ -1,4 +1,4 @@
-import { LoadComments, DeleteArticleComment } from './../state/article.actions';
+import { LoadComments, DeleteArticleComment, AddComment } from './../state/article.actions';
 import { ArticleData, ArticleComment } from '@angular-ngrx-nx-realworld-example-app/api';
 import { LoadArticle } from '../state/article.actions';
 import { Injectable } from '@angular/core';
@@ -6,8 +6,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 
-import { Store } from '@ngxs/store';
-import { Select } from '@ngxs/store';
+import { Store, Select } from '@ngxs/store';
 import { ArticleState } from '../state/article.state';
 
 @Injectable()
@@ -33,6 +32,10 @@ export class ArticleFacadeV2 {
 
   deleteComment(data: { commentId: number; slug: string }) {
     this.store.dispatch(new DeleteArticleComment(data.commentId, data.slug));
+  }
+
+  submit(slug: string) {
+    this.store.dispatch(new AddComment(slug));
   }
 
 }

@@ -1,5 +1,5 @@
 import { AuthFacade } from '@angular-ngrx-nx-realworld-example-app/auth';
-import { Field, NgrxFormsFacade } from '@angular-ngrx-nx-realworld-example-app/ngrx-forms';
+import { Field, SimpleFormFacade } from '@angular-ngrx-nx-realworld-example-app/ngrx-forms';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -58,18 +58,18 @@ export class SettingsComponent implements OnInit {
     private store: Store<any>,
     private router: Router,
     private authFacade: AuthFacade,
-    private ngrxFormsFacade: NgrxFormsFacade
+    private simpleFormFacade: SimpleFormFacade
   ) {}
 
   ngOnInit() {
-    this.ngrxFormsFacade.setStructure(structure);
-    this.authFacade.user$.subscribe(user => this.ngrxFormsFacade.setData(user));
-    this.data$ = this.ngrxFormsFacade.data$;
-    this.structure$ = this.ngrxFormsFacade.structure$;
+    this.simpleFormFacade.setStructure(structure);
+    this.authFacade.user$.subscribe(user => this.simpleFormFacade.setData(user));
+    this.data$ = this.simpleFormFacade.data$;
+    this.structure$ = this.simpleFormFacade.structure$;
   }
 
   updateForm(changes: any) {
-    this.ngrxFormsFacade.updateData(changes);
+    this.simpleFormFacade.updateData(changes);
   }
 
   submit() {

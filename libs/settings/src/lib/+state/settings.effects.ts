@@ -3,7 +3,7 @@ import {
   getUser
 } from '@angular-ngrx-nx-realworld-example-app/auth';
 import {
-  NgrxFormsFacade,
+  SimpleFormFacade,
   SetErrors
 } from '@angular-ngrx-nx-realworld-example-app/ngrx-forms';
 import { Injectable } from '@angular/core';
@@ -25,7 +25,7 @@ export class SettingsEffects {
   @Effect()
   editSettings = this.actions.pipe(
     ofType<EditSettings>(SettingsActionTypes.EDIT_SETTINGS),
-    withLatestFrom(this.ngrxFormsFacade.data$, this.authFacade.user$),
+    withLatestFrom(this.simpleFormFacade.data$, this.authFacade.user$),
     map(([_, data, user]) => ({
       ...user,
       image: data.image,
@@ -52,6 +52,6 @@ export class SettingsEffects {
     private actions: Actions,
     private settingsService: SettingsService,
     private authFacade: AuthFacade,
-    private ngrxFormsFacade: NgrxFormsFacade
+    private simpleFormFacade: SimpleFormFacade
   ) {}
 }

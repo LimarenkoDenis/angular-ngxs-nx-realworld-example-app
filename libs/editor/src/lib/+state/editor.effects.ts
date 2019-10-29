@@ -1,6 +1,5 @@
 import {
-  NgrxFormsFacade,
-  SetErrors
+  SetErrors, SimpleFormFacade
 } from '@angular-ngrx-nx-realworld-example-app/ngrx-forms';
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
@@ -20,7 +19,7 @@ export class EditorEffects {
   @Effect()
   editor = this.actions.pipe(
     ofType<PublishArticle>(EditorActionsType.PUBLISH_ARTICLE),
-    withLatestFrom(this.ngrxFormsFacade.data$),
+    withLatestFrom(this.simpleFormFacade.data$),
     concatMap(([_, data]) =>
       this.editorService.publishArticle(data).pipe(
         map(result => ({
@@ -45,7 +44,7 @@ export class EditorEffects {
 
   constructor(
     private actions: Actions,
-    private ngrxFormsFacade: NgrxFormsFacade,
+    private simpleFormFacade: SimpleFormFacade,
     private editorService: EditorService
   ) {}
 }
